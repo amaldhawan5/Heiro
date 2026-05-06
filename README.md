@@ -1,51 +1,77 @@
-import { useState } from "react"; import { Card, CardContent } from "@/components/ui/card"; import { Button } from "@/components/ui/button"; import { Input } from "@/components/ui/input";
+import datetime
 
-export default function StudentHelperApp() { const [tasks, setTasks] = useState([]); const [taskInput, setTaskInput] = useState(""); const [timeInput, setTimeInput] = useState(""); const [question, setQuestion] = useState(""); const [answer, setAnswer] = useState("");
+tasks = []
 
-const addTask = () => { if (!taskInput || !timeInput) return; setTasks([...tasks, { task: taskInput, time: timeInput }]); setTaskInput(""); setTimeInput(""); };
+def show_menu():
+    print("\n📚 Student Helper Chatbot")
+    print("1. Ask Study Question")
+    print("2. Add Task")
+    print("3. View Tasks")
+    print("4. Delete Task")
+    print("5. Study Tips")
+    print("6. Exit")
 
-const deleteTask = (index) => { const newTasks = tasks.filter((_, i) => i !== index); setTasks(newTasks); };
+def study_help():
+    question = input("Ask your study question: ")
+    print("\n🤖 Answer:")
+    
+    # Basic AI-like responses
+    if "math" in question.lower():
+        print("Try breaking the problem step by step. Practice formulas daily.")
+    elif "science" in question.lower():
+        print("Focus on concepts and diagrams. Revise NCERT thoroughly.")
+    elif "history" in question.lower():
+        print("Make timelines and short notes for better memory.")
+    else:
+        print("That's a great question! Try researching it and revising regularly.")
 
-const handleQuestion = () => { let res = "Try studying consistently and revising."; if (question.toLowerCase().includes("math")) { res = "Break problems step by step and practice formulas."; } else if (question.toLowerCase().includes("science")) { res = "Focus on concepts and diagrams."; } else if (question.toLowerCase().includes("history")) { res = "Make timelines and short notes."; } setAnswer(res); };
+def add_task():
+    task = input("Enter your task: ")
+    time = input("Enter time (HH:MM): ")
+    tasks.append({"task": task, "time": time})
+    print("✅ Task added successfully!")
 
-return ( <div className="p-4 grid gap-4"> <h1 className="text-2xl font-bold">📚 Student Helper</h1>
+def view_tasks():
+    if not tasks:
+        print("No tasks yet.")
+    else:
+        print("\n📝 Your Tasks:")
+        for i, t in enumerate(tasks):
+            print(f"{i+1}. {t['task']} at {t['time']}")
 
-{/* Chatbot */}
-  <Card>
-    <CardContent className="p-4">
-      <h2 className="font-semibold mb-2">Ask Study Question</h2>
-      <Input
-        placeholder="Ask something..."
-        value={question}
-        onChange={(e) => setQuestion(e.target.value)}
-      />
-      <Button className="mt-2" onClick={handleQuestion}>
-        Ask
-      </Button>
-      {answer && <p className="mt-2">🤖 {answer}</p>}
-    </CardContent>
-  </Card>
+def delete_task():
+    view_tasks()
+    try:
+        num = int(input("Enter task number to delete: "))
+        tasks.pop(num-1)
+        print("❌ Task deleted.")
+    except:
+        print("Invalid choice.")
 
-  {/* Task Manager */}
-  <Card>
-    <CardContent className="p-4">
-      <h2 className="font-semibold mb-2">Task Manager</h2>
-      <div className="flex gap-2">
-        <Input
-          placeholder="Task"
-          value={taskInput}
-          onChange={(e) => setTaskInput(e.target.value)}
-        />
-        <Input
-          placeholder="Time"
-          value={timeInput}
-          onChange={(e) => setTimeInput(e.target.value)}
-        />
-        <Button onClick={addTask}>Add</Button>
-      </div>
+def study_tips():
+    print("\n📌 Study Tips:")
+    print("- Study in 25 min sessions (Pomodoro)")
+    print("- Revise daily")
+    print("- Practice questions")
+    print("- Avoid distractions")
 
-      <ul className="mt-4">
-        {tasks.map((t, i) => (
-          <li key={i} className="flex justify-between mb-2">
-            <span>
-              {t
+# Main loop
+while True:
+    show_menu()
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        study_help()
+    elif choice == "2":
+        add_task()
+    elif choice == "3":
+        view_tasks()
+    elif choice == "4":
+        delete_task()
+    elif choice == "5":
+        study_tips()
+    elif choice == "6":
+        print("Goodbye! Keep studying 📖")
+        break
+    else:
+        print("Invalid choice.")
